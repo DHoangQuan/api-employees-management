@@ -25,6 +25,33 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
+# gem for frontend
+gem 'font-awesome-sass'
+
+# CORS
+gem 'rack-cors'
+
+# gem authorize for rails view
+gem 'devise'
+
+# gem authorization api
+# gem 'devise_token_auth'
+
+# for import excel
+gem 'roo'
+
+# export excel
+gem 'axlsx_rails'
+
+# for api
+gem 'fast_jsonapi'
+
+# pagination
+gem 'will_paginate', '~> 3.3'
+
+# delay job
+gem 'delayed_job_active_record'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
