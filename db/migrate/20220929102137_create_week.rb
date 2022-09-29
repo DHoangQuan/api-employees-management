@@ -1,4 +1,4 @@
-class Week < ActiveRecord::Migration[6.1]
+class CreateWeek < ActiveRecord::Migration[6.1]
   def change
     create_table :weeks do |t|
       t.date :from_date
