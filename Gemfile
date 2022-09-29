@@ -34,6 +34,9 @@ gem 'rack-cors'
 # gem authorize for rails view
 gem 'devise'
 
+# jquery for project
+gem 'jquery-rails'
+
 # gem authorization api
 # gem 'devise_token_auth'
 
