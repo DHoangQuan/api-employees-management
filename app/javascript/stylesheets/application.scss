@@ -1,0 +1,23 @@
+@import "bootstrap";
+
+.dataTables_length label {
+  display: inline-flex;
+  select {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+
+.dataTables_filter label {
+  display: flex;
+  justify-content: flex-end;
+
+  input {
+    margin-left: 5px;
+  }
+}
+
+.dataTables_paginate {
+  display: flex;
+  justify-content: flex-end;
+}
