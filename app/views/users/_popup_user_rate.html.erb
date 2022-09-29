@@ -1,0 +1,51 @@
+<%= form_with url: rates_path(resource_id: @resource_id,
+                              type: Rate::RESOURCES[:user],
+                              company_id: @company_id),
+                   method: :post do |form| %>
+        <div class="modal-body">
+          <div class="row">
+              <p class="font-weight-bold col-md-6">External:</p>
+            </div>
+          <div class="row">
+            <div class="col-md-6 d-inline-flex pb-2">
+              <%= form.label :external_regular, 'Reg:', class: 'col-4' %>
+              <%= form.text_field :external_regular,
+                                  value: @user_rate&.external_regular,
+                                  required: true,
+                                  class: 'form-control form-control-user col-8 ml-2' %>
+            </div>
+            <br class="d-sm-block">
+            <div class="col-md-6 d-inline-flex">
+              <%= form.label :external_ot, 'OT:', class: 'col-4' %>
+              <%= form.text_field :external_ot,
+                                  value: @user_rate&.external_ot,
+                                  required: true,
+                                  class: 'form-control form-control-user col-8 ml-2' %>
+            </div>
+          </div>
+
+          <div class="row">
+              <p class="font-weight-bold col-md-6">Internal:</p>
+            </div>
+          <div class="row">
+            <div class="col-md-6 d-inline-flex pb-2">
+              <%= form.label :internal_regular, 'Reg:', class: 'col-4' %>
+              <%= form.text_field :internal_regular,
+                                  value: @user_rate&.internal_regular,
+                                  required: true,
+                                  class: 'form-control form-control-user col-8 ml-2' %>
+            </div>
+            <br class="d-sm-block">
+            <div class="col-md-6 d-inline-flex">
+              <%= form.label :internal_ot, 'OT:', class: 'col-4' %>
+              <%= form.text_field :internal_ot,
+                                  value: @user_rate&.internal_ot,
+                                  required: true,
+                                  class: 'form-control form-control-user col-8 ml-2' %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= form.submit class: 'btn btn-success'%>
+        </div>
+      <% end %>

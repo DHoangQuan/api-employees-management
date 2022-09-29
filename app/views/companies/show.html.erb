@@ -1,0 +1,658 @@
+<% rate = nil %>
+<% if @company.rates.present? %>
+  <% rate = @company.rates.current_using %>
+<% end %>
+
+<h1><%= @company.display_name.upcase %></h1>
+<h5>Total employees: <%= @company.users.count %></h5>
+<!-- Collapsable Info -->
+<div class="card shadow mb-4">
+  <!-- Card Header - Accordion -->
+  <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+      role="button" aria-expanded="true" aria-controls="collapseCardExample">
+      <h6 class="m-0 font-weight-bold text-primary">Infomation</h6>
+  </a>
+  <!-- Card Content - Collapse -->
+  <div class="collapse" id="collapseCardExample">
+      <div class="card-body">
+
+        <div class="col-md-2">
+          <button type="button" class="btn btn-icon-split btn-sm" data-toggle="modal" data-target="#infoModal">
+            <span class="icon">
+                <i class="fas fa-edit"></i>
+            </span>
+            <span class="text">Edit</span>
+          </button>
+        </div>
+        <br>
+
+        <div class="row">
+          <div class="col-md-6">
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Company name:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.name.upcase %></p>
+            </span>
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Display name:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.display_name.upcase %></p>
+            </span>
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Email:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.email %></p>
+            </span>
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Phone:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.phone_number %></p>
+            </span>
+          </div>
+          <div class="col-md-6">
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Tax:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.tax %></p>
+            </span>
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Website:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.website %></p>
+            </span>
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Address 1:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.address1 %></p>
+            </span>
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Address 2:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.address2 %></p>
+            </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <span class="font-weight-bold col-md-6">Note:</span>
+          <p><%= @company.note %></p>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- Collapsable Rate -->
+<div class="card shadow mb-4">
+  <!-- Card Header - Accordion -->
+  <a href="#collapseRate" class="d-block card-header py-3" data-toggle="collapse"
+      role="button" aria-expanded="true" aria-controls="collapseRate">
+      <h6 class="m-0 font-weight-bold text-primary">Rate</h6>
+  </a>
+
+  <!-- Card Content - Collapse -->
+  <div class="collapse" id="collapseRate">
+    <div class="card-body">
+
+      <div class="col-md-2">
+        <button type="button" class="btn btn-icon-split btn-sm" data-toggle="modal" data-target="#rateModal">
+          <% if @company.rates.current_using.present? %>
+            <span class="icon">
+                <i class="fas fa-edit"></i>
+            </span>
+            <span class="text">Edit</span>
+          <% else %>
+            <span class="icon">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">Create</span>
+          <% end %>
+
+        </button>
+      </div>
+      <br>
+      <%# External %>
+      <div class="row">
+
+        <div class="col-xl-2 col-md-2 mb-4">
+            <div class="card border-left-success shadow py-2 bg-success">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h6 mb-0 font-weight-bold text-white">External</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-5 col-md-5 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Regular</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$<%= rate&.external_regular %></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-5 col-md-5 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                OT</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$<%= rate&.external_ot %></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <%# Internal %>
+      <div class="row">
+
+        <div class="col-xl-2 col-md-2 mb-4">
+            <div class="card border-left-secondary shadow py-2 bg-secondary">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h6 mb-0 font-weight-bold text-white">Interal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-5 col-md-5 mb-4">
+            <div class="card border-left-secondary shadow py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                                Regular</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$<%= rate&.internal_regular %></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-5 col-md-5 mb-4">
+            <div class="card border-left-secondary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                                OT</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$<%= rate&.internal_ot %></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Collapsable Users -->
+<div class="card shadow mb-4">
+  <!-- Card Header - Accordion -->
+  <a href="#collapseEmployees" class="d-block card-header py-3" data-toggle="collapse"
+      role="button" aria-expanded="true" aria-controls="collapseEmployees">
+      <h6 class="m-0 font-weight-bold text-primary">Employees</h6>
+  </a>
+
+  <!-- Card Content - Collapse -->
+  <div class="collapse" id="collapseEmployees">
+    <div class="card-body">
+
+      <div class="row">
+        <div class="col-md-2">
+          <%= link_to users_has_not_join_company_path(@company.id),
+                      method: :get,
+                      remote: true,
+                      class: 'btn btn-sm btn-icon-split p-1' do %>
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">Add</span>
+          <% end %>
+        </div>
+      </div>
+      <br>
+      <div class="table-responsive">
+        <table class="table table-bordered dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                  <th></th>
+                  <th>First Name</th>
+                  <th>Middle Name</th>
+                  <th>Last Name</th>
+                  <th>Display Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>
+
+                  </th>
+              </tr>
+            </thead>
+            <tbody>
+                <% count = 0 %>
+                <% @company_users.each do |user| %>
+                  <% count += 1 %>
+
+                <tr>
+                  <td><%= count %></td>
+                  <td><%= user.first_name.upcase %></td>
+                  <td><%= user.middle_name&.upcase %></td>
+                  <td><%= user.last_name.upcase %></td>
+                  <td><%= user.display_name.upcase %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.phone_number %></td>
+                  <td>
+                    <%= link_to kick_user_company_path(@company, user_id: user.id), method: :delete, class: 'btn p-1' do %>
+                                  <i class="fa fa-trash"></i>
+                              <% end %>
+                  </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<% if @company.rates.current_using.present? %>
+  <!-- Collapsable Working time -->
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseWorkingTime" class="d-block card-header py-3" data-toggle="collapse"
+        role="button" aria-expanded="true" aria-controls="collapseRate">
+        <h6 class="m-0 font-weight-bold text-primary">Working Time</h6>
+    </a>
+
+    <!-- Card Content import -->
+    <div class="collapse" id="collapseWorkingTime">
+      <div class="card-body">
+        <div class="row">
+          <h4 class="col-md-3">Import from Excel file</h4>
+          <div class="col-md-9">
+            <%= form_tag import_excel_working_times_path(company_id: @company.id), multipart: true do %>
+              <%= file_field_tag :file, class: 'py-2'%>
+              <%= label_tag :day_in_week, 'Pick a day in week'%>
+              <%= date_field_tag :day_in_week %>
+              <%= submit_tag "Import", class: "btn btn-outline" %>
+            <% end %>
+          </div>
+        </div>
+        <br>
+
+        <%# latest import %>
+        <div class="row">
+          <div class="card shadow mb-4">
+            <div class="card-header py-3 row">
+              <div class="col-md-6">
+                <h6 class="m-0 font-weight-bold text-primary">Last Import (<%= @last_import.first&.created_at %>)</h6>
+                <% week = @last_import.first&.week %>
+                <h6 class="m-0 font-weight-bold text-primary">For: <%= week&.from_date %> - <%= week&.to_date %></h6>
+              </div>
+              <div class="col-md-6 d-flex justify-content-end">
+
+                <ul class="navbar-nav ml-auto">
+                  <div class="topbar-divider d-none d-sm-block"></div>
+                  <!-- Nav Item - User Information -->
+                  <li class="nav-item dropdown no-arrow">
+                      <a class="nav-link dropdown-toggle" id="rateDropdown" role="button"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                            Applied Rate
+                          </span>
+                      </a>
+                      <!-- Dropdown - User Information -->
+                      <div class="dropdown-menu dropdown-menu-right shadow"
+                          aria-labelledby="rateDropdown">
+                        <div class="dropdown-item" >
+                          Internal
+                        </div>
+                        <div class="dropdown-item row d-inline-flex" >
+                          <div class="col-md-6">
+                            REG: <%= @rate_setting&.rate&.internal_regular %>
+                          </div>
+                          <div class="col-md-6">
+                            OT: <%= @rate_setting&.rate&.internal_ot %>
+                          </div>
+                        </div>
+                        <div class="dropdown-item" >
+                          External
+                        </div>
+                        <div class="dropdown-item row d-inline-flex" >
+                          <div class="col-md-6">
+                            REG: <%= @rate_setting&.rate&.external_regular %>
+                          </div>
+                          <div class="col-md-6">
+                            OT: <%= @rate_setting&.rate&.external_ot  %>
+                          </div>
+                        </div>
+                      </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <%= link_to 'All History', working_times_companies_path(company_id: @company),
+                                          method: :get,
+                                          class: 'col-md-2 btn btn-sm btn-icon-split px-2' %>
+                <%= link_to 'Export Timesheet', export_origin_working_times_path(
+                                              format: :xlsx,
+                                              company_id: @company,
+                                              uuid: @last_import.first&.uuid
+                                            ),
+                                            method: :get,
+                                            class: 'col-md-2 btn btn-sm btn-icon-split px-2' %>
+                <%= link_to 'Export Internal', export_salary_working_times_path(
+                                              format: :xlsx,
+                                              company_id: @company,
+                                              uuid: @last_import.first&.uuid,
+                                              type: 'internal'
+                                            ),
+                                            method: :get,
+                                            class: 'col-md-2 btn btn-sm btn-icon-split px-2' %>
+                <%= link_to 'Export External', export_salary_working_times_path(
+                                              format: :xlsx,
+                                              company_id: @company,
+                                              uuid: @last_import.first&.uuid,
+                                              type: 'external'
+                                            ),
+                                            method: :get,
+                                            class: 'col-md-2 btn btn-sm btn-icon-split px-2' %>
+                <% if rate.present? && !@rate_setting&.rate_id.present? && @last_import.present? %>
+                  <%= link_to 'Apply Rate', apply_rate_working_times_path(
+                                              wkt_uuid: @last_import.first&.uuid,
+                                              rate_id: rate.id,
+                                              company_id: @company
+                                            ),
+                                            method: :put,
+                                            class: 'col-md-1 btn btn-sm btn-icon-split px-2' %>
+                <% end %>
+              </div>
+              <br>
+
+              <div class="row pl-3">
+                <div class="col-md-1" style="border: 1px solid; background-color: #FFFFE2">
+                </div>
+                <div class="col-md-3">
+                  <p>Row was edited (high-priority)</p>
+                </div>
+              </div>
+              <br>
+
+              <div class="row pl-3">
+                <div class="col-md-1" style="border: 1px solid; background-color: #A9DACE">
+                </div>
+                <div class="col-md-3">
+                  <p>Row applied personal rate</p>
+                </div>
+              </div>
+              <br>
+
+              <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTableWorkingTime" width="100%" cellspacing="0">
+                      <thead>
+                          <tr>
+                              <th rowspan="2">STT</th>
+                              <th rowspan="2">Name</th>
+                              <th rowspan="2">MON</th>
+                              <th rowspan="2">TUE</th>
+                              <th rowspan="2">WED</th>
+                              <th rowspan="2">THU</th>
+                              <th rowspan="2">FRI</th>
+                              <th rowspan="2">SAT</th>
+                              <th rowspan="2">REGH</th>
+                              <th rowspan="2">OTH</th>
+                              <th rowspan="2">TTH</th>
+                              <th colspan="2">External</th>
+                              <th colspan="2">Internal</th>
+                              <th rowspan="2">
+                                <%= link_to destroy_all_working_times_path(uuid: @last_import.first&.uuid, company_id: @company),
+                                            method: :delete,
+                                            class: 'btn btn-icon-split p-1' do %>
+                                  Delete All
+                                <% end %>
+                              </th>
+                          </tr>
+                          <tr>
+                            <th>REG</th>
+                            <th>OT</th>
+                            <th>REG</th>
+                            <th>OT</th>
+                          </tr>
+
+                      </thead>
+                      <tbody>
+                          <% count = 0 %>
+                          <% @last_import.each do |row| %>
+                            <% count += 1 %>
+                            <% reg_h = row.total_hours > 40 ? 40 : row.total_hours %>
+                            <% ot_h = [(row.total_hours - 40), 0].max %>
+                            <% color = nil%>
+                            <% if row.created_at != row.updated_at %>
+                              <% color = '#FFFFE2' %>
+                            <% elsif @rate_setting.rate_id != row.rate_id %>
+                              <% color = '#A9DACE' %>
+                            <% end %>
+
+
+                          <tr style="<%= color.present? ? "background-color: #{color}" : '' %>">
+                            <td><%= count %></td>
+                            <td>
+                              <% if row.user_id.present? %>
+                                <%= link_to '', list_users_working_times_path(wkt_uuid: @last_import.first&.uuid,
+                                                                              company_id: @company.id,
+                                                                              user_id: row.user_id,
+                                                                              id: row),
+                                                method: :get,
+                                                remote: true,
+                                                class: 'btn btn-success p-1' %>
+                              <% else %>
+                                <%= link_to '', list_users_working_times_path(wkt_uuid: @last_import.first&.uuid,
+                                                                              company_id: @company.id,
+                                                                              id: row),
+                                                method: :get,
+                                                remote: true,
+                                                class: 'btn btn-danger p-1' %>
+                              <% end %>
+                              <%= row.display_name&.upcase %>
+                            </td>
+                            <td><%= row.monday %></td>
+                            <td><%= row.tuesday %></td>
+                            <td><%= row.wednesday %></td>
+                            <td><%= row.thursday %></td>
+                            <td><%= row.friday %></td>
+                            <td><%= row.saturday %></td>
+                            <td><%= reg_h %></td>
+                            <td><%= ot_h %></td>
+                            <td><%= row.total_hours %></td>
+                            <td><%= row.e_reg_money %></td>
+                            <td><%= row.e_ot_money %></td>
+                            <td><%= row.i_reg_money %></td>
+                            <td><%= row.i_ot_money %></td>
+                            <td>
+                              <span>
+                                <%= link_to working_time_path(id: row.id), method: :get, remote: true, class: 'btn p-1' do %>
+                                  <i class="fa fa-edit"></i>
+                                <% end %>
+                                <%= link_to working_time_path(id: row.id, company_id: @company), method: :delete, class: 'btn p-1' do %>
+                                    <i class="fa fa-trash"></i>
+                                <% end %>
+                                <%= link_to working_time_path(id: row.id),
+                                            method: :get,
+                                            class: "btn #{ row.note.present? ? 'btn-warning' : '' } p-1" do %>
+                                  <i class="fas fa-sticky-note"></i>
+                                <% end %>
+                              </span>
+                            </td>
+                          </tr>
+                          <% end %>
+                      </tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- Rate model -->
+<div class="modal fade bd-example-modal-md" id="rateModal" tabindex="-1" role="dialog" aria-labelledby="rateModal" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <%= form_with url: rates_path(resource_id: @company,
+                                    type: Rate::RESOURCES[:company]),
+                                    method: :post do |form| %>
+        <div class="modal-body">
+          <div class="row">
+              <p class="font-weight-bold col-md-6">External:</p>
+            </div>
+          <div class="row">
+            <div class="col-md-6 d-inline-flex pb-2">
+              <%= form.label :external_regular, 'Reg:', class: 'col-4' %>
+              <%= form.text_field :external_regular,
+                                  value: rate&.external_regular,
+                                  required: true,
+                                  class: 'form-control form-control-user col-8 ml-2' %>
+            </div>
+            <br class="d-sm-block">
+            <div class="col-md-6 d-inline-flex">
+              <%= form.label :external_ot, 'OT:', class: 'col-4' %>
+              <%= form.text_field :external_ot,
+                                  value: rate&.external_ot,
+                                  required: true,
+                                  class: 'form-control form-control-user col-8 ml-2' %>
+            </div>
+          </div>
+
+          <div class="row">
+              <p class="font-weight-bold col-md-6">Internal:</p>
+            </div>
+          <div class="row">
+            <div class="col-md-6 d-inline-flex pb-2">
+              <%= form.label :internal_regular, 'Reg:', class: 'col-4' %>
+              <%= form.text_field :internal_regular,
+                                  required: true,
+                                  value: rate&.internal_regular,
+                                  class: 'form-control form-control-user col-8 ml-2' %>
+            </div>
+            <br class="d-sm-block">
+            <div class="col-md-6 d-inline-flex">
+              <%= form.label :internal_ot, 'OT:', class: 'col-4' %>
+              <%= form.text_field :internal_ot,
+                                  value: rate&.internal_ot,
+                                  required: true,
+                                  class: 'form-control form-control-user col-8 ml-2' %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= form.submit class: 'btn btn-success'%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Info model -->
+<div class="modal fade bd-example-modal-lg" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <%= form_with url: company_path(@company), method: :put do |form| %>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :name, 'Company Name:' %>
+              <%= form.text_field :name,
+                                  value: @company.name,
+                                  required: true,
+                                  class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
+              <%= form.label :display_name, 'Display Name:' %>
+              <%= form.text_field :display_name,
+                                  value: @company.display_name,
+                                  required: true, class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :email, 'Email:' %>
+              <%= form.text_field :email, value: @company.email, class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
+              <%= form.label :phone_number, 'Phone number:' %>
+              <%= form.text_field :phone_number,
+                                  value: @company.phone_number,
+                                  class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :address1, 'Address line 1:' %>
+              <%= form.text_field :address1,
+                                  value: @company.address1,
+                                  class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
+              <%= form.label :address2, 'Address line 2:' %>
+              <%= form.text_field :address2,
+                                  value: @company.address2,
+                                  class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :tax, 'Tax:' %>
+              <%= form.text_field :tax,
+                                  value: @company.tax,
+                                  class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
+              <%= form.label :website, 'Website:' %>
+              <%= form.text_field :website,
+                                  value: @company.website,
+                                  class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <%= form.label :note, 'Note:' %>
+          <%= form.text_area :note,
+                             size: "60x10",
+                             value: @company.note,
+                             class: 'form-control form-control-user' %>
+        </div>
+        <div class="modal-footer">
+          <%= form.submit class: 'btn btn-success'%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

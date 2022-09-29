@@ -1,0 +1,122 @@
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4 row">
+  <h1 class="col-md-9 h3 mb-2 text-gray-800">Companies</h1>
+  <!-- Button trigger modal -->
+  <button type="button" class="col-8 col-md-2 btn btn-sm shadow-sm ml-3 mr-3" data-toggle="modal" data-target="#createCompanyModal">
+    <i class="fas fa-plus fa-sm"></i> New Company
+  </button>
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">List Companies</h6>
+  </div>
+
+  <div class="card-body">
+      <div class="table-responsive">
+          <table class="table table-bordered dataTable" width="100%" cellspacing="0">
+              <thead>
+                  <tr>
+                      <th>STT</th>
+                      <th>Company Name</th>
+                      <th>Display Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Tax</th>
+                      <th>Website</th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <% count = 0 %>
+                  <% @companies.each do |company| %>
+                    <% count += 1 %>
+                  <tr>
+                    <td><%= count %></td>
+                    <td><%= company.name.upcase %></td>
+                    <td><%= company.display_name.upcase %></td>
+                    <td><%= company.email %></td>
+                    <td><%= company.phone_number %></td>
+                    <td><%= company.tax %></td>
+                    <td><%= company.website %></td>
+                    <td>
+                      <%= link_to 'Detail', company_path(id: company.id), class: 'btn btn-sm px-2' %>
+                    </td>
+                  </tr>
+                  <% end %>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="createCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Company</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_with url: '/companies', method: :post do |form| %>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :name, 'Company Name:' %>
+              <%= form.text_field :name, required: true, class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
+              <%= form.label :display_name, 'Display Name:' %>
+              <%= form.text_field :display_name, required: true, class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :email, 'Email:' %>
+              <%= form.text_field :email, class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
+              <%= form.label :phone_number, 'Phone number:' %>
+              <%= form.text_field :phone_number, class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :address1, 'Address line 1:' %>
+              <%= form.text_field :address1, class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
+              <%= form.label :address2, 'Address line 2:' %>
+              <%= form.text_field :address2, class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :tax, 'Tax:' %>
+              <%= form.text_field :tax, class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
+              <%= form.label :website, 'Website:' %>
+              <%= form.text_field :website, class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <%= form.label :note, 'Note:' %>
+          <%= form.text_area :note, size: "60x10", class: 'form-control form-control-user' %>
+        </div>
+        <div class="modal-footer">
+          <%= form.submit class: 'btn btn-success'%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

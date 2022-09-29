@@ -1,0 +1,95 @@
+<div class="container-fluid my-3">
+  <%= form_with url: "/working_times/#{@working_time.id}", method: :put do |form| %>
+    <div class="modal-body">
+      <%= form.label :display_name, 'Display Name:' %>
+      <%= form.text_field :display_name,
+                          required: true,
+                          value: @working_time.display_name&.upcase,
+                          class: 'form-control form-control-user' %>
+      <%= form.hidden_field :company_id, value: @working_time.company_id %>
+      <br>
+      <span class="mr-2 text-gray-600 small">
+        If you don't input TTH, hours will be calculated after you change working time
+      </span>
+      <div class="row">
+        <div class="col-md-2">
+          <%= form.label :monday, 'mon', class: 'text-uppercase' %>
+          <%= form.text_field :monday,
+                              value: @working_time.monday,
+                              class: 'form-control form-control-user' %>
+        </div>
+        <div class="col-md-2">
+          <%= form.label :tuesday, 'tue', class: 'text-uppercase' %>
+          <%= form.text_field :tuesday,
+                              value: @working_time.tuesday,
+                              class: 'form-control form-control-user' %>
+        </div>
+        <div class="col-md-2">
+          <%= form.label :wednesday, 'wed', class: 'text-uppercase' %>
+          <%= form.text_field :wednesday,
+                              value: @working_time.wednesday,
+                              class: 'form-control form-control-user' %>
+        </div>
+        <div class="col-md-2">
+          <%= form.label :thursday, 'thu', class: 'text-uppercase' %>
+          <%= form.text_field :thursday,
+                              value: @working_time.thursday,
+                              class: 'form-control form-control-user' %>
+        </div>
+        <div class="col-md-2">
+          <%= form.label :friday, 'fri', class: 'text-uppercase' %>
+          <%= form.text_field :friday,
+                              value: @working_time.friday,
+                              class: 'form-control form-control-user' %>
+        </div>
+        <div class="col-md-2">
+          <%= form.label :saturday, 'sat', class: 'text-uppercase' %>
+          <%= form.text_field :saturday,
+                              value: @working_time.saturday,
+                              class: 'form-control form-control-user' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <%= form.label :total_hours, "TTH: #{@working_time.total_hours}", class: 'text-uppercase' %>
+          <%= form.text_field :total_hours, class: 'form-control form-control-user' %>
+        </div>
+      </div>
+      <br>
+      <span class="mr-2 text-gray-600 small">
+        External
+      </span>
+      <div class="row">
+        <div class="col-md-6">
+          <%= form.label :e_reg_money, "REG: $#{@working_time.e_reg_money}", class: 'text-uppercase' %>
+          <%= form.text_field :e_reg_money,
+                              class: 'form-control form-control-user' %>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :e_ot_money, "OT: $#{@working_time.e_ot_money}", class: 'text-uppercase' %>
+          <%= form.text_field :e_ot_money,
+                              class: 'form-control form-control-user' %>
+        </div>
+      </div>
+      <br>
+      <span class="mr-2 text-gray-600 small">
+        Internal
+      </span>
+      <div class="row">
+        <div class="col-md-6">
+          <%= form.label :i_reg_money, "REG: $#{@working_time.i_reg_money}", class: 'text-uppercase' %>
+          <%= form.text_field :i_reg_money,
+                              class: 'form-control form-control-user' %>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :i_ot_money, "OT: $#{@working_time.i_ot_money}", class: 'text-uppercase' %>
+          <%= form.text_field :i_ot_money,
+                              class: 'form-control form-control-user' %>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <%= form.submit class: 'btn btn-success'%>
+    </div>
+  <% end %>
+</div>

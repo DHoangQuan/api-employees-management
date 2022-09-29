@@ -1,0 +1,207 @@
+<div class="row">
+  <h4>View History</h4>
+  <%= form_tag working_times_companies_path(company_id: @company), method: :get do %>
+            <%= label_tag :day_in_month, 'Pick a day in month' %>
+            <%= date_field_tag :day_in_month %>
+            <%= submit_tag "View", class: "btn btn-outline" %>
+  <% end %>
+</div>
+<br>
+
+<div class="row">
+  <h4>Import from Excel file</h4>
+  <%= form_tag import_excel_working_times_path(company_id: @company, history: true), multipart: true do %>
+      <%= file_field_tag :file %>
+      <%= label_tag :day_in_week, 'Pick a day in week'%>
+      <%= date_field_tag :day_in_week %>
+      <%= submit_tag "Import", class: "btn btn-success" %>
+  <% end %>
+</div>
+<br>
+
+<div class="row">
+  <h4>Selected month: <%= @selected_month %></h4>
+</div>
+
+<% @working_times.each do |week_id, table| %>
+  <!-- Collapsable Parent Modal -->
+  <div class="card shadow mb-4">
+    <!-- Parent Header -->
+    <a href="#collapseWorkingTime<%= table.first&.week.id %>" class="d-block card-header py-3" data-toggle="collapse"
+        role="button" aria-expanded="true" aria-controls="collapseRate">
+        <h6 class="m-0 font-weight-bold text-primary"><%= table.first&.week.from_date %> - <%= table.first&.week.to_date - 1.days %></h6>
+    </a>
+
+    <!-- Parent Content -->
+    <div class="collapse" id="collapseWorkingTime<%= table.first&.week.id %>">
+      <div class="card-body">
+        <% table.sort_by{ _1.created_at}.reverse.group_by{ _1&.uuid }.each do |uuid, small_table| %>
+
+          <!-- Collapsable Child Modal -->
+          <div class="card shadow mb-4">
+            <!-- Child Header -->
+            <a href="#collapseWorkingTime<%= small_table.first.id %>" class="d-block card-header py-3" data-toggle="collapse"
+                role="button" aria-expanded="true" aria-controls="collapseRate">
+                <h6 class="m-0 font-weight-bold text-primary">Import At <%= small_table.first&.created_at.strftime('%A %d/%m/%Y at %T') %></h6>
+            </a>
+            <!-- Child Content -->
+            <div class="collapse" id="collapseWorkingTime<%= small_table.first.id %>">
+              <div class="card-body">
+
+                <div class="row">
+                  <div class="card shadow mb-4">
+
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-12 col-md-2">
+                          <ul class="navbar-nav ml-auto">
+                            <div class="topbar-divider d-none d-sm-block"></div>
+                            <!-- Nav Applied Rate -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" id="rateDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                      Applied Rate <i class="fa-regular fa-circle-info"></i>
+                                    </span>
+                                </a>
+                                <!-- Dropdown - Applied Rate Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow"
+                                    aria-labelledby="rateDropdown">
+                                  <div class="dropdown-item" >
+                                    Internal
+                                  </div>
+                                  <div class="dropdown-item row d-inline-flex" >
+                                    <div class="col-md-6">
+                                      <% rate_setting = RateSettingOperations::Show.new(wkt_uuid: small_table.first&.uuid).execute %>
+                                      REG: <%= rate_setting&.rate&.internal_regular %>
+                                    </div>
+                                    <div class="col-md-6">
+                                      OT: <%= rate_setting&.rate&.internal_ot %>
+                                    </div>
+                                  </div>
+                                  <div class="dropdown-item" >
+                                    External
+                                  </div>
+                                  <div class="dropdown-item row d-inline-flex" >
+                                    <div class="col-md-6">
+                                      REG: <%= rate_setting&.rate&.external_regular %>
+                                    </div>
+                                    <div class="col-md-6">
+                                      OT: <%= rate_setting&.rate&.external_ot  %>
+                                    </div>
+                                  </div>
+                                </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <br>
+
+                      <!-- Table Responsive -->
+                      <div class="table-responsive">
+                        <table class="table table-bordered dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">STT</th>
+                                    <th rowspan="2">Name</th>
+                                    <th rowspan="2">MON</th>
+                                    <th rowspan="2">TUE</th>
+                                    <th rowspan="2">WED</th>
+                                    <th rowspan="2">THU</th>
+                                    <th rowspan="2">FRI</th>
+                                    <th rowspan="2">SAT</th>
+                                    <th rowspan="2">REGH</th>
+                                    <th rowspan="2">OTH</th>
+                                    <th rowspan="2">TTH</th>
+                                    <th colspan="2">External</th>
+                                    <th colspan="2">Internal</th>
+                                    <th rowspan="2"><%= link_to destroy_all_working_times_path(uuid: table.first&.uuid, company_id: @company), method: :delete, class: 'btn btn-sm p-1' do %>
+                                      Delete All
+                                    <% end %></th>
+                                </tr>
+                                <tr>
+                                  <th>REG</th>
+                                  <th>OT</th>
+                                  <th>REG</th>
+                                  <th>OT</th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <% count = 0 %>
+                                <% small_table.each do |row| %>
+                                  <% count += 1 %>
+                                  <% reg_h = row.total_hours > 40 ? 40 : row.total_hours %>
+                                  <% ot_h = [(row.total_hours - 40), 0].max %>
+
+                                <tr>
+                                  <td><%= count %></td>
+                                  <td><%= row.display_name&.upcase %></td>
+                                  <td><%= row.monday %></td>
+                                  <td><%= row.tuesday %></td>
+                                  <td><%= row.wednesday %></td>
+                                  <td><%= row.thursday %></td>
+                                  <td><%= row.friday %></td>
+                                  <td><%= row.saturday %></td>
+                                  <td><%= reg_h %></td>
+                                  <td><%= ot_h %></td>
+                                  <td><%= row.total_hours %></td>
+                                  <td><%= row.e_reg_money %></td>
+                                  <td><%= row.e_ot_money %></td>
+                                  <td><%= row.i_reg_money %></td>
+                                  <td><%= row.i_ot_money %></td>
+                                  <td>
+                                    <%= link_to working_time_path(id: row.id), class: 'btn btn-sm px-2' do %>
+                                      <i class="fa fa-edit"></i>
+                                    <% end %>
+                                    <%= link_to working_time_path(id: row.id, company_id: @company), method: :delete, class: 'btn btn-sm p-1' do %>
+                                        <i class="fa fa-trash"></i>
+                                    <% end %>
+                                    <%= link_to working_time_path(id: row.id, company_id: @company), method: :delete, class: 'btn btn-sm p-1' do %>
+                                      <i class="fas fa-sticky-note"></i>
+                                    <% end %>
+                                  </td>
+                                </tr>
+                                <% end %>
+                            </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- Collapsable parent modal -->
+  <!-- Parent Header -->
+  <!-- Parent Header -->
+
+  <!-- Parent Content -->
+    <!-- Collapsable child modal -->
+
+      <!-- Child Header -->
+      <!-- Child Header -->
+
+      <!-- Child Content -->
+
+        <!-- Nav Applied Rate -->
+          <!-- Dropdown - Applied Rate Information -->
+        <!-- Nav Applied Rate -->
+
+        <!-- Table Responsive -->
+        <!-- Table Responsive -->
+
+      <!-- Child Content -->
+
+    <!-- Collapsable child modal -->
+  <!-- Parent Content -->
+<!-- Collapsable parent modal -->
