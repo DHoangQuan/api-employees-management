@@ -82,7 +82,8 @@ module WorkingTimeOperations
         e_reg_money: external_regular,
         i_ot_money: internal_ot,
         i_reg_money: internal_regular,
-        total_hours: tth
+        total_hours: tth,
+        note: @params[:note]
       )
     end
     # rubocop:enable Metrics/MethodLength

@@ -33,34 +33,50 @@
               <p class="col-6 col-md-8 pl-0"><%= @company.name.upcase %></p>
             </span>
             <span class="row">
-              <p class="font-weight-bold col-6 col-md-4">Display name:</p>
-              <p class="col-6 col-md-8 pl-0"><%= @company.display_name.upcase %></p>
-            </span>
-            <span class="row">
               <p class="font-weight-bold col-6 col-md-4">Email:</p>
               <p class="col-6 col-md-8 pl-0"><%= @company.email %></p>
             </span>
-            <span class="row">
-              <p class="font-weight-bold col-6 col-md-4">Phone:</p>
-              <p class="col-6 col-md-8 pl-0"><%= @company.phone_number %></p>
-            </span>
-          </div>
-          <div class="col-md-6">
-            <span class="row">
-              <p class="font-weight-bold col-6 col-md-4">Tax:</p>
-              <p class="col-6 col-md-8 pl-0"><%= @company.tax %></p>
-            </span>
-            <span class="row">
-              <p class="font-weight-bold col-6 col-md-4">Website:</p>
-              <p class="col-6 col-md-8 pl-0"><%= @company.website %></p>
+             <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Tax ID:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.tax_id %></p>
             </span>
             <span class="row">
               <p class="font-weight-bold col-6 col-md-4">Address 1:</p>
               <p class="col-6 col-md-8 pl-0"><%= @company.address1 %></p>
             </span>
             <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">City:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.city %></p>
+            </span>
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">ZIP code:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.zipcode %></p>
+            </span>
+          </div>
+          <div class="col-md-6">
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Display name:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.display_name.upcase %></p>
+            </span>
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Website:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.website %></p>
+            </span>
+            <span class="row">
+              <p class="font-weight-bold col-6 col-md-4">Phone:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.phone_number %></p>
+            </span>
+            <span class="row">
               <p class="font-weight-bold col-6 col-md-4">Address 2:</p>
               <p class="col-6 col-md-8 pl-0"><%= @company.address2 %></p>
+            </span>
+            <span class="row">
+             <p class="font-weight-bold col-6 col-md-4">State:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.state %></p>
+            </span>
+            <span class="row">
+             <p class="font-weight-bold col-6 col-md-4">Country:</p>
+              <p class="col-6 col-md-8 pl-0"><%= @company.country %></p>
             </span>
           </div>
         </div>
@@ -493,14 +509,18 @@
                             <td><%= row.i_ot_money %></td>
                             <td>
                               <span>
-                                <%= link_to working_time_path(id: row.id), method: :get, remote: true, class: 'btn p-1' do %>
+                                <%= link_to working_time_path(id: row.id),
+                                            method: :get,
+                                            remote: true,
+                                            class: 'btn p-1' do %>
                                   <i class="fa fa-edit"></i>
                                 <% end %>
                                 <%= link_to working_time_path(id: row.id, company_id: @company), method: :delete, class: 'btn p-1' do %>
                                     <i class="fa fa-trash"></i>
                                 <% end %>
-                                <%= link_to working_time_path(id: row.id),
+                                <%= link_to working_time_path(id: row.id, note: true),
                                             method: :get,
+                                            remote: true,
                                             class: "btn #{ row.note.present? ? 'btn-warning' : '' } p-1" do %>
                                   <i class="fas fa-sticky-note"></i>
                                 <% end %>
@@ -606,6 +626,21 @@
               <%= form.text_field :email, value: @company.email, class: 'form-control form-control-user' %>
             </div>
             <div class="col-md-6">
+              <%= form.label :website, 'Website:' %>
+              <%= form.text_field :website,
+                                  value: @company.website,
+                                  class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :tax_id, 'Tax ID:' %>
+              <%= form.text_field :tax_id,
+                                  value: @company.tax_id,
+                                  class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
               <%= form.label :phone_number, 'Phone number:' %>
               <%= form.text_field :phone_number,
                                   value: @company.phone_number,
@@ -630,15 +665,30 @@
           <br>
           <div class="row">
             <div class="col-md-6">
-              <%= form.label :tax, 'Tax:' %>
-              <%= form.text_field :tax,
-                                  value: @company.tax,
+              <%= form.label :city, 'City:' %>
+              <%= form.text_field :city,
+                                  value: @company.city,
                                   class: 'form-control form-control-user' %>
             </div>
             <div class="col-md-6">
-              <%= form.label :website, 'Website:' %>
-              <%= form.text_field :website,
-                                  value: @company.website,
+              <%= form.label :state, 'State:' %>
+              <%= form.text_field :state,
+                                  value: @company.state,
+                                  class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :zipcode, 'ZIP code:' %>
+              <%= form.text_field :zipcode,
+                                  value: @company.zipcode,
+                                  class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
+              <%= form.label :country, 'Country:' %>
+              <%= form.text_field :country,
+                                  value: @company.country,
                                   class: 'form-control form-control-user' %>
             </div>
           </div>

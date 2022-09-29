@@ -17,8 +17,12 @@ module CompanyOperations
         phone_number: @params[:phone_number],
         address1: @params[:address1],
         address2: @params[:address2],
-        tax: @params[:tax],
+        tax_id: @params[:tax_id],
         website: @params[:website],
+        city: @params[:city],
+        state: @params[:state],
+        zipcode: @params[:zipcode],
+        country: @params[:country],
         note: @params[:note]
       )
 

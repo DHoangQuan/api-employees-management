@@ -12,7 +12,7 @@ module CompanyOperations
       return { succeed: 'fail', message: 'User Not Found' } unless user.present?
       return { succeed: 'fail', message: 'Company Not Found' } unless company.present?
       return { succeed: 'fail', message: 'User has not join this company' } unless company_user.present?
-      return { succeed: true } if working_time?.present?
+      return { succeed: 'fail', message: 'Working Time present?' } if working_time?.present?
 
       @company_user.destroy
 

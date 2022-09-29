@@ -31,6 +31,7 @@ class WorkingTimesController < ApplicationController
     result = WorkingTimeOperations::Show.new(params).execute
 
     @working_time = result[:working_time]
+    @edit_note = params[:note].present?
   end
 
   def update

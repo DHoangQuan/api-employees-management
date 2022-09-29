@@ -24,7 +24,7 @@
                       <th>Display Name</th>
                       <th>Email</th>
                       <th>Phone</th>
-                      <th>Tax</th>
+                      <th>Tax ID</th>
                       <th>Website</th>
                       <th></th>
                   </tr>
@@ -39,7 +39,7 @@
                     <td><%= company.display_name.upcase %></td>
                     <td><%= company.email %></td>
                     <td><%= company.phone_number %></td>
-                    <td><%= company.tax %></td>
+                    <td><%= company.tax_id %></td>
                     <td><%= company.website %></td>
                     <td>
                       <%= link_to 'Detail', company_path(id: company.id), class: 'btn btn-sm px-2' %>
@@ -83,6 +83,17 @@
               <%= form.text_field :email, class: 'form-control form-control-user' %>
             </div>
             <div class="col-md-6">
+              <%= form.label :website, 'Website:' %>
+              <%= form.text_field :website, class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :tax_id, 'Tax ID:' %>
+              <%= form.text_field :tax_id, class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
               <%= form.label :phone_number, 'Phone number:' %>
               <%= form.text_field :phone_number, class: 'form-control form-control-user' %>
             </div>
@@ -101,12 +112,23 @@
           <br>
           <div class="row">
             <div class="col-md-6">
-              <%= form.label :tax, 'Tax:' %>
-              <%= form.text_field :tax, class: 'form-control form-control-user' %>
+              <%= form.label :city, 'City:' %>
+              <%= form.text_field :city, class: 'form-control form-control-user' %>
             </div>
             <div class="col-md-6">
-              <%= form.label :website, 'Website:' %>
-              <%= form.text_field :website, class: 'form-control form-control-user' %>
+              <%= form.label :state, 'State:' %>
+              <%= form.text_field :state, class: 'form-control form-control-user' %>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6">
+              <%= form.label :zipcode, 'ZIP code:' %>
+              <%= form.text_field :zipcode, class: 'form-control form-control-user' %>
+            </div>
+            <div class="col-md-6">
+              <%= form.label :country, 'Country:' %>
+              <%= form.text_field :country, class: 'form-control form-control-user' %>
             </div>
           </div>
           <br>
