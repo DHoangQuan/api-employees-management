@@ -32,9 +32,15 @@
 #  index_users_on_reset_password_token                            (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
+  # Include default devise modules.
+  # devise :database_authenticatable, :registerable,
+  #         :recoverable, :rememberable, :trackable, :validatable,
+  #         :confirmable, :omniauthable
+  devise :database_authenticatable
+  include DeviseTokenAuth::Concerns::User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :rememberable
+  # devise :database_authenticatable, :rememberable
 
   has_many :user_companies
   has_many :companies, through: :user_companies
@@ -43,6 +49,8 @@ class User < ApplicationRecord
   has_many :rates, class_name: 'UserRate', foreign_key: :resource_id
 
   scope :not_admin, -> { where.not(role: [ROLES[:supper_admin], ROLES[:admin]]) }
+
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
 
   ROLES = {
     supper_admin: 0,

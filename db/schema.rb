@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_29_174041) do
+ActiveRecord::Schema.define(version: 2022_10_03_082701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,9 +86,19 @@ ActiveRecord::Schema.define(version: 2022_09_29_174041) do
     t.string "address1"
     t.string "address2"
     t.boolean "allow_login", default: false
+    t.string "provider", default: "email", null: false
+    t.string "uid", default: "", null: false
+    t.boolean "allow_password_change", default: false
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.json "tokens"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["display_name", "phone_number"], name: "index_users_on_display_name_and_phone_number"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["id", "display_name", "email", "phone_number"], name: "index_users_on_id_and_display_name_and_email_and_phone_number"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
   create_table "weeks", force: :cascade do |t|

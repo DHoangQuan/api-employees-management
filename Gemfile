@@ -32,10 +32,11 @@ gem 'font-awesome-sass'
 gem 'rack-cors'
 
 # gem authorize for rails view
-gem 'devise'
+# gem 'devise'
 
 # gem authorization api
-# gem 'devise_token_auth'
+gem 'devise_token_auth'
+gem 'omniauth'
 
 # for import excel
 gem 'roo'
