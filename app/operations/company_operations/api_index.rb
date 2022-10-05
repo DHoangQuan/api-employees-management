@@ -8,7 +8,7 @@ module CompanyOperations
     end
 
     def execute
-      Company.all.paginate(page: @params[:page], per_page: 10)
+      Company.paginate(page: @params[:page], per_page: 10)
     rescue StandardError, AnotherError => e
       {
         success: 'fail',

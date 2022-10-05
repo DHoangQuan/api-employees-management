@@ -7,17 +7,40 @@ module Api
         skip_before_action :verify_authenticity_token
 
         def create
-          user = User.new(resource_params)
-          resource = User.find_by(email: user.email.downcase)
+          resource = User.find_by(email: resource_params[:email].downcase)
 
           if resource.present? && resource.allow_login
-            super()
+            rs = resource.valid_password?(resource_params[:password])
+            # @token = 'DeviseTokenAuth::TokenFactory'.constantize.create
+
+            if rs
+              super do |obj|
+                return render json: success_respon(obj)
+              end
+            end
+
+            render json: {
+              success: false,
+              errors: 'Invalid login credentials. Please try again'
+            }
           else
             render json: {
               success: false,
-              errors: ['Not Found User']
+              errors: 'Not Found User'
             }
           end
+        end
+
+        private
+
+        def success_respon(resource)
+          {
+            user: resource.slice(:display_name),
+            uid: resource.uid,
+            'access-token': @token.token,
+            client: @token.client,
+            expiry: @token.expiry
+          }
         end
       end
     end

@@ -3,5 +3,5 @@
 class ApiApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
 
-  before_action authenticate_api_v1_user!
+  before_action :authenticate_user!
 end
