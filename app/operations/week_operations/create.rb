@@ -17,14 +17,14 @@ module WeekOperations
         to_date: Utils::ConvertTime.only_date(end_date_of_week)
       )
 
-      return { succeed: 'fail', message: week.errors.objects.first.full_message } unless week.valid?
+      return { success: 'fail', message: week.errors.objects.first.full_message } unless week.valid?
 
       week.save
 
-      { succeed: true }
+      { success: true }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

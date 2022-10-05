@@ -8,12 +8,12 @@ module CompanyOperations
     end
 
     def execute
-      return { succeed: 'fail', message: 'Company Not Found' } unless company.present?
+      return { success: 'fail', message: 'Company Not Found' } unless company.present?
 
       users = User.not_admin.where.not(id: company_users.pluck(:id)).select(:id, :display_name)
 
       {
-        succeed: true,
+        success: true,
         users: users
       }
     end

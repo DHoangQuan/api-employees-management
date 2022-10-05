@@ -9,18 +9,18 @@ module UserOperations
 
     # rubocop:disable Metrics/MethodLength
     def execute
-      return { succeed: 'fail', message: 'User Not Found' } unless user.present?
+      return { success: 'fail', message: 'User Not Found' } unless user.present?
 
       join_company_ids = user.companies.pluck(:id)
       @companies = Company.where.not(id: join_company_ids)
 
       {
-        succeed: true,
+        success: true,
         companies: @companies
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

@@ -18,12 +18,12 @@ class WorkingTimesController < ApplicationController
   def import_excel
     status = WorkingTimeOperations::ImportExcel.new(params).execute
 
-    if status[:succeed] == true && params[:history].present?
+    if status[:success] == true && params[:history].present?
       return redirect_to working_times_companies_path(company_id: params[:company_id],
                                                       day_in_month: params[:day_in_week])
     end
 
-    redirect_to company_path(params[:company_id]) if status[:succeed] == true
+    redirect_to company_path(params[:company_id]) if status[:success] == true
   end
   # rubocop:enable Metrics/AbcSize
 
@@ -37,13 +37,13 @@ class WorkingTimesController < ApplicationController
   def update
     status = WorkingTimeOperations::Update.new(params).execute
 
-    redirect_to company_path(params[:company_id]) if status[:succeed] == true
+    redirect_to company_path(params[:company_id]) if status[:success] == true
   end
 
   def destroy
     status = WorkingTimeOperations::Destroy.new(params).execute
 
-    redirect_to company_path(params[:company_id]) if status[:succeed] == true
+    redirect_to company_path(params[:company_id]) if status[:success] == true
   end
 
   # destroy all working time by uuid
@@ -52,19 +52,19 @@ class WorkingTimesController < ApplicationController
 
     status = WorkingTimeOperations::DestroyAll.new(params).execute
 
-    redirect_to company_path(params[:company_id]) if status[:succeed] == true
+    redirect_to company_path(params[:company_id]) if status[:success] == true
   end
 
   def apply_rate
     status = WorkingTimeOperations::ApplyRate.new(params).execute
 
-    redirect_to company_path(params[:company_id]) if status[:succeed] == true
+    redirect_to company_path(params[:company_id]) if status[:success] == true
   end
 
   def export_origin
     result = WorkingTimeOperations::ExportOrigin.new(params).execute
 
-    return if result[:succeed] == 'fail'
+    return if result[:success] == 'fail'
 
     @info_data = result[:info]
     @header = result[:header]
@@ -80,7 +80,7 @@ class WorkingTimesController < ApplicationController
   def export_salary
     result = WorkingTime::REPORT_TYPE_METHOD[params[:type].to_sym].constantize.new(params).execute
 
-    return if result[:succeed] == 'fail'
+    return if result[:success] == 'fail'
 
     @info_data = result[:info]
     @header = result[:header]
@@ -104,7 +104,7 @@ class WorkingTimesController < ApplicationController
   def assign_users
     status = WorkingTimeOperations::AssignUsers.new(params).execute
 
-    redirect_to company_path(status[:company_id]) if status[:succeed]
+    redirect_to company_path(status[:company_id]) if status[:success]
   end
 end
 # rubocop:enable Style/Documentation

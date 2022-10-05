@@ -11,15 +11,15 @@ module WorkingTimeOperations
     def execute
       status = WorkingTime.find_by_id(@params[:id]).destroy
 
-      return { succeed: true } if status
+      return { success: true } if status
 
       {
-        succeed: 'fail',
+        success: 'fail',
         message: 'Update failed'
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

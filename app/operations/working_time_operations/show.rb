@@ -11,15 +11,15 @@ module WorkingTimeOperations
     def execute
       working_time = WorkingTime.find_by_id(@params[:id])
 
-      return { succeed: 'fail', message: e.inspect } unless working_time.present?
+      return { success: 'fail', message: e.inspect } unless working_time.present?
 
       {
-        succeed: true,
+        success: true,
         working_time: working_time
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

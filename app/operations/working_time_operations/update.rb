@@ -8,14 +8,14 @@ module WorkingTimeOperations
     end
 
     def execute
-      return { succeed: 'fail', message: e.inspect } unless working_time.present?
+      return { success: 'fail', message: e.inspect } unless working_time.present?
 
       update_wkt
 
-      { succeed: true }
+      { success: true }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

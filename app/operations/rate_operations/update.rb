@@ -13,7 +13,7 @@ module RateOperations
     def execute
       resource_object = @type.capitalize.constantize.find_by_id(@resource_id)
 
-      return { succeed: 'fail', message: "There no #{@type.capitalize}" } unless resource_object.present?
+      return { success: 'fail', message: "There no #{@type.capitalize}" } unless resource_object.present?
 
       status = resource_object.rate.update(
         internal_regular: @params[:internal_regular],
@@ -23,15 +23,15 @@ module RateOperations
         status: Rate::COLUMN_STATUS[:edited]
       )
 
-      return { succeed: true } if status
+      return { success: true } if status
 
       {
-        succeed: 'fail',
+        success: 'fail',
         message: 'Update failed'
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

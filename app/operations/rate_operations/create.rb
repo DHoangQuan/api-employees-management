@@ -13,7 +13,7 @@ module RateOperations
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize
     def execute
-      return { succeed: 'fail', message: "There no #{@type.capitalize}" } unless @resource_object.present?
+      return { success: 'fail', message: "There no #{@type.capitalize}" } unless @resource_object.present?
 
       company_id = @resource_object.is_a?(User) ? @params[:company_id] : nil
 
@@ -32,16 +32,16 @@ module RateOperations
             company_id: company_id
           )
 
-          return { succeed: 'fail', message: rate.errors.objects.first.full_message } unless rate.valid?
+          return { success: 'fail', message: rate.errors.objects.first.full_message } unless rate.valid?
 
           rate.save
         end
       end
 
-      { succeed: true }
+      { success: true }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

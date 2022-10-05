@@ -9,18 +9,18 @@ module UserOperations
 
     # rubocop:disable Metrics/MethodLength
     def execute
-      return { succeed: 'fail', message: 'User Not Found' } unless user.present?
+      return { success: 'fail', message: 'User Not Found' } unless user.present?
 
       working_times = WorkingTime.where(user_id: @user.id, week_id: weeks.pluck(:id))&.group_by(&:company_id)
 
       {
-        succeed: true,
+        success: true,
         weeks: weeks.group_by(&:id),
         working_times: working_times
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

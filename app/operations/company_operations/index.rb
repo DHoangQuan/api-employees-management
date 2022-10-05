@@ -14,7 +14,7 @@ module CompanyOperations
       Company.all.order(created_at: :DESC)
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

@@ -16,12 +16,12 @@ module WorkingTimeOperations
                                  .group_by{ _1&.week_id }
       # byebug
       {
-        succeed: true,
+        success: true,
         working_times: working_times
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

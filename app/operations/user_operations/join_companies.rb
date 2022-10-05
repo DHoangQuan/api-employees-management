@@ -11,7 +11,7 @@ module UserOperations
     def execute
       ActiveRecord::Base.transaction do
         user = User.find_by_id(@user_id)
-        return { succeed: 'fail', message: 'Not Found' } unless valid_company_ids
+        return { success: 'fail', message: 'Not Found' } unless valid_company_ids
 
         companies.each do |company|
           user.companies << company
@@ -19,11 +19,11 @@ module UserOperations
       end
 
       {
-        succeed: true
+        success: true
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

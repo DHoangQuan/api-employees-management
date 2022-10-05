@@ -20,7 +20,7 @@ module WorkingTimeOperations
       header = []
       company = Company.find_by_id(@company_id)
 
-      return { succeed: 'fail', message: 'Company Not Found'} unless company.present?
+      return { success: 'fail', message: 'Company Not Found'} unless company.present?
 
       company_users = company&.users
       @week_id = check_week(@day_in_week)
@@ -44,10 +44,10 @@ module WorkingTimeOperations
         end
       end
 
-      { succeed: true }
+      { success: true }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

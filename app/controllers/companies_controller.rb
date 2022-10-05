@@ -9,7 +9,7 @@ class CompaniesController < ApplicationController
   def create
     status = CompanyOperations::Create.new(params).execute
 
-    redirect_to action: :index if status[:succeed]
+    redirect_to action: :index if status[:success]
   end
 
   def show
@@ -22,13 +22,13 @@ class CompaniesController < ApplicationController
   def update
     status = CompanyOperations::Update.new(params).execute
 
-    redirect_to company_path(params[:id]) if status[:succeed]
+    redirect_to company_path(params[:id]) if status[:success]
   end
 
   def kick_user
     status = CompanyOperations::KickUser.new(params).execute
 
-    redirect_to company_path(params[:id]) if status[:succeed]
+    redirect_to company_path(params[:id]) if status[:success]
   end
 
   def users_has_not_join
@@ -41,7 +41,7 @@ class CompaniesController < ApplicationController
   def add_users
     status = CompanyOperations::AddUsers.new(params).execute
 
-    redirect_to company_path(params[:id]) if status[:succeed]
+    redirect_to company_path(params[:id]) if status[:success]
   end
 end
 # rubocop:enable Style/Documentation

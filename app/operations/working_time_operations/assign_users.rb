@@ -9,20 +9,20 @@ module WorkingTimeOperations
 
     # rubocop:disable Metrics/MethodLength
     def execute
-      return { succeed: 'fail', message: 'User Not Found' } if @params[:user_id].present? && user.blank?
-      return { succeed: 'fail', message: 'Working Time Not Found' } unless working_time.present?
+      return { success: 'fail', message: 'User Not Found' } if @params[:user_id].present? && user.blank?
+      return { success: 'fail', message: 'Working Time Not Found' } unless working_time.present?
 
       status = working_time.update(user_id: user&.id)
 
-      return { succeed: true, company_id: working_time.company_id } if status
+      return { success: true, company_id: working_time.company_id } if status
 
       {
-        succeed: 'fail',
+        success: 'fail',
         message: 'Update failed'
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

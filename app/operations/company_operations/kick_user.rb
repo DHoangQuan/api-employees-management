@@ -9,19 +9,19 @@ module CompanyOperations
 
     # rubocop:disable Metrics/MethodLength
     def execute
-      return { succeed: 'fail', message: 'User Not Found' } unless user.present?
-      return { succeed: 'fail', message: 'Company Not Found' } unless company.present?
-      return { succeed: 'fail', message: 'User has not join this company' } unless company_user.present?
-      return { succeed: 'fail', message: 'Working Time present?' } if working_time?.present?
+      return { success: 'fail', message: 'User Not Found' } unless user.present?
+      return { success: 'fail', message: 'Company Not Found' } unless company.present?
+      return { success: 'fail', message: 'User has not join this company' } unless company_user.present?
+      return { success: 'fail', message: 'Working Time present?' } if working_time?.present?
 
       @company_user.destroy
 
       {
-        succeed: true
+        success: true
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

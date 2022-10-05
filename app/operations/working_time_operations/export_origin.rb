@@ -29,7 +29,7 @@ module WorkingTimeOperations
       end
 
       {
-        succeed: true,
+        success: true,
         file_name: file_name,
         info: info,
         header: header,
@@ -37,7 +37,7 @@ module WorkingTimeOperations
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

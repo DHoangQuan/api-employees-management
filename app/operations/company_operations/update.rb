@@ -22,12 +22,12 @@ module CompanyOperations
         note: @params[:note]
       )
 
-      return { succeed: 'fail', message: 'update failed' } unless status
+      return { success: 'fail', message: 'update failed' } unless status
 
-      { succeed: true }
+      { success: true }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

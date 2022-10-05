@@ -28,13 +28,13 @@ module WorkingTimeOperations
           e_ot_money: e_ot_money
         )
 
-        { succeed: 'fail', message: 'apply rate fail' } unless status
+        { success: 'fail', message: 'apply rate fail' } unless status
       end
 
-      { succeed: true }
+      { success: true }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

@@ -9,9 +9,9 @@ module CompanyOperations
 
     # rubocop:disable Metrics/MethodLength
     def execute
-      return { succeed: 'fail', message: 'Company Not Found' } unless company.present?
-      return { succeed: 'fail', message: 'Users Not Found' } unless users.present?
-      return { succeed: 'fail', message: 'Some Users not existing' } if @users.size != @params[:user_ids].size
+      return { success: 'fail', message: 'Company Not Found' } unless company.present?
+      return { success: 'fail', message: 'Users Not Found' } unless users.present?
+      return { success: 'fail', message: 'Some Users not existing' } if @users.size != @params[:user_ids].size
 
       @params[:user_ids].each do |user_id|
         UserCompany.create!(
@@ -21,11 +21,11 @@ module CompanyOperations
       end
 
       {
-        succeed: true
+        success: true
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

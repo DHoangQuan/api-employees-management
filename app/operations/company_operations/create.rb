@@ -26,14 +26,14 @@ module CompanyOperations
         note: @params[:note]
       )
 
-      return { succeed: 'fail', message: company.errors.objects.first.full_message } unless company.valid?
+      return { success: 'fail', message: company.errors.objects.first.full_message } unless company.valid?
 
       company.save
 
-      { succeed: true }
+      { success: true }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

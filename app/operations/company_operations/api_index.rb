@@ -2,13 +2,13 @@
 
 module CompanyOperations
   # rubocop:disable Style/Documentation
-  class Show
+  class ApiIndex
     def initialize(params)
       @params = params
     end
 
     def execute
-      Company.find_by_id(@params[:id])
+      Company.all.paginate(page: @params[:page], per_page: 10)
     rescue StandardError, AnotherError => e
       {
         success: 'fail',

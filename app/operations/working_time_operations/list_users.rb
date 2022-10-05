@@ -8,17 +8,17 @@ module WorkingTimeOperations
     end
 
     def execute
-      return { succeed: 'fail', message: 'Company Not Found' } unless company.present?
+      return { success: 'fail', message: 'Company Not Found' } unless company.present?
 
       users = user_not_in_wkt.select(:id, :display_name)
 
       {
-        succeed: true,
+        success: true,
         users: users
       }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end

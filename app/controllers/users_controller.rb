@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def create
     status = UserOperations::Create.new(params).execute
 
-    redirect_to action: 'index' if status[:succeed]
+    redirect_to action: 'index' if status[:success]
   end
 
   def show
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   def update
     status = UserOperations::Update.new(params).execute
 
-    redirect_to user_path(params[:id]) if status[:succeed]
+    redirect_to user_path(params[:id]) if status[:success]
   end
 
   def not_join_companies
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   def join_companies
     status = UserOperations::JoinCompanies.new(params).execute
 
-    redirect_to user_path(params[:id]) if status[:succeed]
+    redirect_to user_path(params[:id]) if status[:success]
   end
 
   def popup_user_rate

@@ -25,14 +25,14 @@ module UserOperations
         role: User::ROLES[:employee]
       )
 
-      return { succeed: 'fail', message: user.errors.objects.first.full_message } unless user.valid?
+      return { success: 'fail', message: user.errors.objects.first.full_message } unless user.valid?
 
       user.save
 
-      { succeed: true }
+      { success: true }
     rescue StandardError, AnotherError => e
       {
-        succeed: 'fail',
+        success: 'fail',
         message: e.inspect
       }
     end
