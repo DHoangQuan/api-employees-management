@@ -11,7 +11,6 @@ module Api
 
           if resource.present? && resource.allow_login
             rs = resource.valid_password?(resource_params[:password])
-            # @token = 'DeviseTokenAuth::TokenFactory'.constantize.create
 
             if rs
               super do |obj|
@@ -22,12 +21,12 @@ module Api
             render json: {
               success: false,
               errors: 'Invalid login credentials. Please try again'
-            }
+            }, status: 401
           else
             render json: {
               success: false,
               errors: 'Not Found User'
-            }
+            }, status: 401
           end
         end
 
